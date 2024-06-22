@@ -1,33 +1,143 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* src/app/styles.css */
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --background-color: #121212;
+  --foreground-color: #1e1e1e;
+  --text-color: #ffffff;
+  --button-background-color: #333333;
+  --button-hover-color: #555555;
+  --button-text-color: #ffffff;
+  --input-background-color: #1e1e1e;
+  --input-border-color: #444444;
+  --input-text-color: #ffffff;
+  --output-background-color: #333333;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.registration-check,
+.redirecting {
+  text-align: center;
+}
+
+.registration-check h2,
+.redirecting h2 {
+  margin-bottom: 20px;
+}
+
+.registration-check button {
+  margin: 10px; /* Increased margin for better spacing */
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 4px;
+}
+
+.registration-check button:hover {
+  background-color: var(--button-hover-color);
+}
+
+.ticket-calculator-form {
+  max-width: 400px;
+  margin: 20px auto; /* Increased margin for better centering */
+  padding: 20px;
+  background-color: var(--foreground-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.output {
+  font-weight: bold;
+}
+
+.form-group {
+  margin-top: 0px;
+  margin-bottom: 20px; /* Increased margin between form groups */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 20px; /* Increased margin between label and input */
+  font-weight: 200;
+  color: var(--text-color);
+}
+
+.form-group p {
+  margin-top: -10px;
+}
+
+.form-group input {
+  width: calc(100% - 22px); /* Adjusted to account for padding */
+  padding: 10px; /* Increased padding for input fields */
+  border: 1px solid var(--input-border-color);
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
+  border-radius: 4px;
+}
+
+@keyframes lightEffect {
+  0% {
+    background-position: -1000% 0%;
   }
+  100% {
+    background-position: 1000% 0%;
+  }
+}
+
+.ticket-day {
+  display: inline-block;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  background-size: 200% 100%;
+  color: transparent;
+  animation: lightEffect 60s linear infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+
+
+.calculate-button {
+  width: 100%;
+  padding: 12px; /* Increased padding for calculate button */
+  background-color: var(--button-background-color);
+  border: none;
+  border-radius: 4px;
+  color: var(--button-text-color);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.calculate-button:hover {
+  background-color: var(--button-hover-color);
+}
+
+.output {
+  margin-top: 20px;
+  padding: 15px; /* Increased padding for output */
+  background-color: var(--output-background-color);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-color);
 }
