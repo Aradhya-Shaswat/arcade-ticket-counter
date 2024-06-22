@@ -1,9 +1,16 @@
 // src/app/RegistrationCheck.js
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 
 const RegistrationCheck = ({ onRegistered }) => {
   const [isRegistered, setIsRegistered] = useState(null);
+  const [showAnimation, setShowAnimation] = useState(false); // State to trigger animation
+
+  useEffect(() => {
+    setShowAnimation(true); // Trigger animation on component mount
+  }, []);
+
 
   const handleYes = () => {
     setIsRegistered(true);
@@ -12,14 +19,15 @@ const RegistrationCheck = ({ onRegistered }) => {
 
   const handleNo = () => {
     setIsRegistered(false);
-    window.location.href = 'https://hackclub.com/register'; // Replace with your registration link
+    window.location.href = 'https://hackclub.com/arcade/'; // Replace with your registration link
   };
 
   return (
     <div className="registration-check">
-      <h2>Have you registered for the HackClub?</h2>
-      <button onClick={handleYes}>Yes</button>
-      <button onClick={handleNo}>No</button>
+      <h3>Have you registered for HackClub's <span className={showAnimation ? 'arcade' : ''}>'Arcade'</span></h3>
+      <button onClick={handleYes}>1</button>
+      <button onClick={handleNo}>0</button>
+      
     </div>
   );
 };

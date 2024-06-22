@@ -1,4 +1,5 @@
 /* src/app/styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
 :root {
   --background-color: #121212;
@@ -11,11 +12,12 @@
   --input-border-color: #444444;
   --input-text-color: #ffffff;
   --output-background-color: #333333;
+  --font-share-tech-mono: 'Share Tech Mono', monospace; /* Define font family */
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-share-tech-mono);
   background-color: var(--background-color);
   color: var(--text-color);
 }
@@ -47,6 +49,7 @@ body {
   color: var(--button-text-color);
   border: none;
   border-radius: 4px;
+  font-family: var(--font-share-tech-mono);
 }
 
 .registration-check button:hover {
@@ -60,6 +63,7 @@ body {
   background-color: var(--foreground-color);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-share-tech-mono);
 }
 
 .output {
@@ -89,6 +93,7 @@ body {
   background-color: var(--input-background-color);
   color: var(--input-text-color);
   border-radius: 4px;
+  font-family: var(--font-share-tech-mono);
 }
 
 @keyframes lightEffect {
@@ -115,6 +120,23 @@ body {
   background-clip: text;
 }
 
+.arcade {
+  display: inline-block;
+  background: linear-gradient(
+    to right,
+    rgba(255, 165, 0, 0.3) 0%, /* Orangy color with transparency */
+    rgba(255, 165, 0, 0.8) 50%, /* Orangy color with more opacity */
+    rgba(255, 165, 0, 0.3) 100% /* Orangy color with transparency */
+  );
+  background-size: 200% 100%;
+  color: transparent;
+  animation: lightEffect 60s linear infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-family: var(--font-share-tech-mono);
+}
+
+
 
 
 .calculate-button {
@@ -125,6 +147,7 @@ body {
   border-radius: 4px;
   color: var(--button-text-color);
   font-size: 16px;
+  font-family: var(--font-share-tech-mono);
   cursor: pointer;
 }
 

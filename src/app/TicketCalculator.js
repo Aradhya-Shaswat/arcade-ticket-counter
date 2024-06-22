@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 const TicketCalculator = () => {
   const [step, setStep] = useState(1);
   const [currentTickets, setCurrentTickets] = useState('');
@@ -6,6 +7,8 @@ const TicketCalculator = () => {
   const [workingDays, setWorkingDays] = useState('');
   const [daysLeft, setDaysLeft] = useState(0); // State to hold days left
   const [output, setOutput] = useState('');
+  const [showShareBox, setShowShareBox] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false); // State to track if link is copied
 
   const handleSubmitCurrentTickets = (e) => {
     e.preventDefault();
@@ -32,6 +35,10 @@ const TicketCalculator = () => {
       alert('Please enter a valid number of days you can work.');
       return;
     }
+    if (workingDays > daysLeft) {
+      alert(`You cannot enter more than ${daysLeft} days.`);
+      return;
+    }
     calculate(); // Calculate the result after entering working days
   };
 
@@ -47,7 +54,27 @@ const TicketCalculator = () => {
     const ticketsRemaining = ticketsNeeded - currentTickets;
     const ticketsPerDay = ticketsRemaining / workingDays;
 
-    setOutput(`You need to complete approximately ${ticketsPerDay.toFixed(2)} tickets per day.`);
+    // Calculate hours and minutes required
+    let hoursRequired = Math.floor(ticketsPerDay); // Whole hours
+    let minutesRequired = Math.round((ticketsPerDay - hoursRequired) * 60); // Remaining minutes
+
+    // Check if goal has already been achieved
+    if (hoursRequired <= 0 && minutesRequired <= 0) {
+      setOutput(`congratulations! you have already completed your goal! 🎉`);
+    } else if (hoursRequired >= 24 || (hoursRequired < 0 && minutesRequired < 0)) {
+      setOutput(`:< sorry, but it is mathematically impossible to achieve that goal! 😔`);
+    } else {
+      setOutput(`you need to complete approximately ${ticketsPerDay.toFixed(1)} tickets per day, which is ${hoursRequired} hours and ${minutesRequired} minutes per day!`);
+    }
+
+    setShowShareBox(true);
+  };
+
+  const handleShareClick = () => {
+    const shareText = ``; // Replace with your desired link
+    navigator.clipboard.writeText(shareText).then(() => {
+      setLinkCopied(true);
+    });
   };
 
   return (
@@ -63,7 +90,7 @@ const TicketCalculator = () => {
               required
             />
           </div>
-          <button type="submit" className="calculate-button">Next</button>
+          <button type="submit" className="calculate-button">Next➡️</button>
         </form>
       )}
       {step === 2 && (
@@ -77,28 +104,34 @@ const TicketCalculator = () => {
               required
             />
           </div>
-          <button type="submit" className="calculate-button">Next</button>
+          <button type="submit" className="calculate-button">Next➡️</button>
         </form>
       )}
       {step === 3 && (
         <form onSubmit={handleSubmitWorkingDays}>
           <p><b>{daysLeft}</b> Days remaining until Event End!</p>
           <div className="form-group">
-            <label>Out of that, how many days can you work?</label>
+            <label>Out of that, how many days can you work? </label>
             <input
               type="number"
               value={workingDays}
               onChange={(e) => setWorkingDays(e.target.value)}
+              max={daysLeft} // Limit input to daysLeft
               required
             />
           </div>
-          <button type="submit" className="calculate-button">Calculate</button>
+          <button type="submit" className="calculate-button"><b>CALCULATE!</b></button>
         </form>
       )}
       {output && (
         <div className="output">
-          <p>Result:</p>
           <p>{output}</p>
+        </div>
+      )}
+      {showShareBox && (
+        <div className="share-box" onClick={handleShareClick}>
+          <p style={{ textDecoration: 'underline', cursor: 'pointer' }}>Share with others!</p>
+          {linkCopied && <p style={{ color: 'green' }}>Link copied to clipboard!</p>}
         </div>
       )}
     </div>

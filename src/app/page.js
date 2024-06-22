@@ -24,7 +24,7 @@ export default function HomePage() {
         <RegistrationCheck onRegistered={handleRegistrationStatus} />
       ) : registered ? (
         <div>
-          <h1>Arsh's <span className={showAnimation ? 'ticket-day' : ''}>'Ticket/Day'</span> Calculator</h1>
+          <center><h3>Arsh's <span className={showAnimation ? 'ticket-day' : ''}>'Ticket/Day'</span> Calculator</h3></center>
           <TicketCalculator />
         </div>
       ) : (
