@@ -141,7 +141,7 @@ const TicketCalculator = () => {
         <div className="share-box" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <p style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={handleShareClick}>Share with others!</p>
           <p style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={handleRestartClick}>Restart</p>
-          {linkCopied && <p style={{ color: 'green' }}>Link copied to clipboard!</p>}
+       
         </div>
       )}
     </div>
