@@ -134,9 +134,16 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   font-family: var(--font-share-tech-mono);
+  font-size: 125%;
 }
 
+.checkButton:hover{
+  color: rgb(10, 179, 10);
+}
 
+.checkButton1:hover{
+  color: rgb(211, 78, 48);
+}
 
 
 .calculate-button {

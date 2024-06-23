@@ -19,14 +19,14 @@ const RegistrationCheck = ({ onRegistered }) => {
 
   const handleNo = () => {
     setIsRegistered(false);
-    window.location.href = 'https://hackclub.com/arcade/'; // Replace with your registration link
+    window.location.href = 'https://hackclub.com/arcade/';
   };
 
   return (
     <div className="registration-check">
-      <h3>Have you registered for HackClub's <span className={showAnimation ? 'arcade' : ''}>'Arcade'</span></h3>
-      <button onClick={handleYes}>1</button>
-      <button onClick={handleNo}>0</button>
+      <h3>Have you registered for <u>Hack Club's</u> <span className={showAnimation ? 'arcade' : ''}>'Arcade'</span></h3>
+      <button className='checkButton' onClick={handleYes}>1 ( yes! )</button>
+      <button className='checkButton1' onClick={handleNo}>{`0 ( no :< )`}</button>
       
     </div>
   );

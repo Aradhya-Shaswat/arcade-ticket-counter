@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const TicketCalculator = () => {
   const [step, setStep] = useState(1);
@@ -9,6 +9,10 @@ const TicketCalculator = () => {
   const [output, setOutput] = useState('');
   const [showShareBox, setShowShareBox] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false); // State to track if link is copied
+
+  useEffect(() => {
+    calculateDaysLeft();
+  }, []);
 
   const handleSubmitCurrentTickets = (e) => {
     e.preventDefault();
@@ -26,13 +30,12 @@ const TicketCalculator = () => {
       return;
     }
     setStep(3);
-    calculateDaysLeft(); // Calculate days left after moving to step 3
   };
 
   const handleSubmitWorkingDays = (e) => {
     e.preventDefault();
-    if (!workingDays || isNaN(workingDays)) {
-      alert('Please enter a valid number of days you can work.');
+    if (!workingDays || isNaN(workingDays) || workingDays <= 0) {
+      alert('Please enter a valid number of days you can work. It must be greater than 0.');
       return;
     }
     if (workingDays > daysLeft) {
@@ -48,6 +51,7 @@ const TicketCalculator = () => {
     const msLeft = endDate - currentDate;
     const daysRemaining = Math.floor(msLeft / (1000 * 60 * 60 * 24));
     setDaysLeft(daysRemaining);
+    setWorkingDays(daysRemaining); // Set workingDays to daysLeft initially
   };
 
   const calculate = () => {
@@ -60,21 +64,25 @@ const TicketCalculator = () => {
 
     // Check if goal has already been achieved
     if (hoursRequired <= 0 && minutesRequired <= 0) {
-      setOutput(`congratulations! you have already completed your goal! 🎉`);
+      setOutput(`Congratulations! You have already completed your goal! 🎉`);
     } else if (hoursRequired >= 24 || (hoursRequired < 0 && minutesRequired < 0)) {
-      setOutput(`:< sorry, but it is mathematically impossible to achieve that goal! 😔`);
+      setOutput(`Sorry, but it is mathematically impossible to achieve that goal! 😔`);
     } else {
-      setOutput(`you need to complete approximately ${ticketsPerDay.toFixed(1)} tickets per day, which is ${hoursRequired} hours and ${minutesRequired} minutes per day!`);
+      setOutput(`You need to complete approximately ${ticketsPerDay.toFixed(1)} tickets per day, which is ${hoursRequired} hours and ${minutesRequired} minutes per day!`);
     }
 
     setShowShareBox(true);
   };
 
   const handleShareClick = () => {
-    const shareText = ``; // Replace with your desired link
+    const shareText = 'https://arcade-tickets.vercel.app/'; // Replace with your desired link
     navigator.clipboard.writeText(shareText).then(() => {
       setLinkCopied(true);
     });
+  };
+
+  const handleRestartClick = () => {
+    window.location.reload();
   };
 
   return (
@@ -111,12 +119,13 @@ const TicketCalculator = () => {
         <form onSubmit={handleSubmitWorkingDays}>
           <p><b>{daysLeft}</b> Days remaining until Event End!</p>
           <div className="form-group">
-            <label>Out of that, how many days can you work? </label>
+            <label>Out of that, how many days can you work?</label>
             <input
               type="number"
               value={workingDays}
               onChange={(e) => setWorkingDays(e.target.value)}
               max={daysLeft} // Limit input to daysLeft
+              min="1" // Ensure the value cannot be 0
               required
             />
           </div>
@@ -129,8 +138,9 @@ const TicketCalculator = () => {
         </div>
       )}
       {showShareBox && (
-        <div className="share-box" onClick={handleShareClick}>
-          <p style={{ textDecoration: 'underline', cursor: 'pointer' }}>Share with others!</p>
+        <div className="share-box" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={handleShareClick}>Share with others!</p>
+          <p style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={handleRestartClick}>Restart</p>
           {linkCopied && <p style={{ color: 'green' }}>Link copied to clipboard!</p>}
         </div>
       )}
